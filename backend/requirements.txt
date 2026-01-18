@@ -1,0 +1,13 @@
+fastapi
+uvicorn
+celery
+redis
+sqlalchemy
+psycopg2-binary
+pydantic
+curl_cffi
+playwright
+prometheus_client
+python-dotenv
+prometheus-fastapi-instrumentator==6.1.0
+beautifulsoup4==4.12.3

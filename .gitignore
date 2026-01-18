@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.env
+
+# Backups & Duplicates
+*copy*
+*-Copy*
+*.bak
+*.tmp
+
+# Docker & Infrastructure
+postgres_data/
+*.log
+celerybeat-schedule
+
+# OS
+.DS_Store
+
+# Database Data (Docker Volumes)
+storage/
+postgres_data/
+data/

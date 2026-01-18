@@ -1,0 +1,15 @@
+global:
+  scrape_interval: 5s
+
+scrape_configs:
+  - job_name: 'nexus-api'
+    static_configs:
+      - targets: ['api:8000']
+
+  - job_name: 'nexus-workers'
+    metrics_path: '/'
+    static_configs:
+      - targets: 
+          - '172.20.0.6:8001' # Worker 1 IP
+          - '172.20.0.7:8001' # Check docker inspect for Worker 2
+          - '172.20.0.8:8001' # Check docker inspect for Worker 3
