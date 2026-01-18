@@ -1,28 +1,31 @@
+import os
 import requests
-import json
+from core.stealth import StealthEngine
 
-# The API endpoint on your Ubuntu machine
-API_URL = "http://localhost:8000/ingest"
+def run_smoke_test():
+    print("🚀 Starting Nexus Ingest Smoke Test...")
+    stealth = StealthEngine()
+    
+    # Test 1: Local IP Check
+    print("\n[1/3] Checking Local IP...")
+    local_res = requests.get("https://api.ipify.org?format=json")
+    print(f"📍 Local IP: {local_res.json().get('ip')}")
 
-# A mock payload simulating a high-level requirement
-payload = {
-    "tenant_id": "client_alpha_001",
-    "site_type": "real_estate",
-    "urls": [
-        "https://httpbin.org/headers", 
-        "https://httpbin.org/ip"
-    ]
-}
-
-print("🚀 Sending ingestion request to Nexus-Ingest...")
-
-try:
-    response = requests.post(API_URL, json=payload)
-    if response.status_code == 200:
-        print("✅ Success! Job Queued.")
-        print(f"📦 Response: {json.dumps(response.json(), indent=2)}")
+    # Test 2: Proxy Tiering Check (Datacenter)
+    print("\n[2/3] Checking Datacenter Proxy (US)...")
+    dc_res = stealth.get("https://api.ipify.org?format=json", tier="datacenter")
+    if dc_res:
+        print(f"🛡️ Proxy IP: {dc_res.json().get('ip')}")
     else:
-        print(f"❌ Failed: {response.status_code}")
-        print(response.text)
-except Exception as e:
-    print(f"❌ Connection Error: {e}")
+        print("⚠️ Datacenter Proxy failed or not configured.")
+
+    # Test 3: Stealth Engine & Target Reachability (Amazon)
+    print("\n[3/3] Checking Amazon US Reachability...")
+    amz_res = stealth.get("https://www.amazon.com/dp/B0D9M3K7K7", tier="datacenter")
+    if amz_res and amz_res.status_code == 200:
+        print("✅ Amazon US reached successfully via StealthEngine!")
+    else:
+        print(f"❌ Amazon US Blocked (Status: {amz_res.status_code if amz_res else 'No Response'})")
+
+if __name__ == "__main__":
+    run_smoke_test()
