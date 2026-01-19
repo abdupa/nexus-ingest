@@ -10,6 +10,18 @@ class StealthEngine:
     def __init__(self):
         self.browser_profiles = ["chrome110", "chrome120", "safari15_5"]
         
+        # 1. Load from .env first
+        env_proxies = os.getenv("DATACENTER_PROXY_LIST")
+        if env_proxies:
+            self.datacenter_pool = env_proxies.split(",")
+        else:
+            # 2. Failsafe (Hardcoded)
+            self.datacenter_pool = [
+                "http://66622:KUTZdUP5F@192.126.176.227:8800",
+                "http://66622:KUTZdUP5F@108.62.70.11:8800"
+                # ... rest of your ips
+            ]
+        
     def _get_config(self, proxy_url=None):
         return {
             "impersonate": random.choice(self.browser_profiles),
@@ -26,7 +38,7 @@ class StealthEngine:
         if tier == "residential":
             proxy_url = os.getenv("RESIDENTIAL_PROXY_URL")
         else:
-            proxy_url = os.getenv("DATACENTER_PROXY_URL")
+            proxy_url = random.choice(self.datacenter_pool)
         
         # LOGGING: Vital for debugging your home IP vs Proxy
         if not proxy_url:
@@ -70,3 +82,7 @@ class StealthEngine:
             "timeout": 30,
             "verify": True
         }
+
+# 1. Ensure the class is defined above
+# 2. CREATE THE INSTANCE HERE
+stealth_engine = StealthEngine()

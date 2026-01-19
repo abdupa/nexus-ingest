@@ -7,7 +7,7 @@ import redis
 from datetime import datetime
 
 # Pathing for Docker/Microservice Package Resolution
-sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(os.path.abspath(os.path.dirname(__file__)))
 
 from celery import Celery
 from celery.utils.log import get_task_logger
@@ -15,7 +15,7 @@ from prometheus_client import Counter
 
 # Core & Strategies
 from core.stealth import stealth_engine  # Assuming singleton
-from core.database import SessionLocal
+from database import SessionLocal           # Changed from core.database
 from core.models import ScrapedRecord
 from strategies import get_strategy_for_url
 
