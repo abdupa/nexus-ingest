@@ -27,11 +27,5 @@ A high-performance, multi-tenant web ingestion backend built for scale. Designed
 - **Infrastructure**: Docker & Docker-Compose
 - **Stealth**: curl_cffi, Custom Headers, Jitter Pacing
 
-## 📈 Project Roadmap
-- [x] Phase 1: Distributed Multi-Tenant Architecture
-- [x] Phase 2: Expert Hardening (Circuit Breaker & Proxy Tiering)
-- [ ] Phase 3: Headless Browser Fallback (Playwright)
-- [ ] Phase 4: GPT-4o Vision for OCR-based price extraction
-
 ---
 *Developed by ABDupa | Specialized in Scalable Data Pipelines and Anti-Bot Bypass Strategies.*
